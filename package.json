@@ -4,7 +4,6 @@
     "description": "A redux-like library for the same purposes",
     "main": "src/index.js",
     "scripts": {
-        "start": "webpack-dev-server --open --config webpack.config.js",
         "build": "webpack --config webpack.config.js"
     },
     "author": "dwnste",
