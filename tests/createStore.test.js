@@ -33,8 +33,28 @@ const reducer = (state = initialState, action) => {
     }
 };
 
+const actionToggleFoo = {
+    type: 'TOGGLE_FOO',
+};
+
+const actionToggleBar = {
+    type: 'TOGGLE_BAR',
+};
+
+const actionDoSomething = {
+    type: 'DO_SOMETHING',
+};
+
 test('state from getState is equal to initial', () => {
     const store = createStore(initialState, reducer);
+
+    expect(store.getState()).toEqual(initialState);
+});
+
+test('unknown action type doesn\'t change the state', () => {
+    const store = createStore(initialState, reducer);
+
+    store.dispatch(actionDoSomething);
 
     expect(store.getState()).toEqual(initialState);
 });
@@ -42,9 +62,7 @@ test('state from getState is equal to initial', () => {
 test('foo is toggled', () => {
     const store = createStore(initialState, reducer);
 
-    store.dispatch({
-        type: 'TOGGLE_FOO',
-    });
+    store.dispatch(actionToggleFoo);
 
     expect(store.getState()).toEqual(toggledFooState);
 });
@@ -52,13 +70,8 @@ test('foo is toggled', () => {
 test('foo and bar are toggled', () => {
     const store = createStore(initialState, reducer);
 
-    store.dispatch({
-        type: 'TOGGLE_FOO',
-    });
-
-    store.dispatch({
-        type: 'TOGGLE_BAR',
-    });
+    store.dispatch(actionToggleFoo);
+    store.dispatch(actionToggleBar);
 
     expect(store.getState()).toEqual(toggledFooAndBarState);
 });
