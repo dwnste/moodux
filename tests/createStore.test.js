@@ -97,10 +97,3 @@ test('dispatch 3 actions and see if subscription works', () => {
 
     expect(counter).toBe(3);
 });
-
-/*
-
-const unsubscribe = store.subscribe(() => { console.log(state) });
-
-unsubscribe();
-*/
