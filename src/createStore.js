@@ -12,7 +12,7 @@ const createStore = (state = {}, reducer) => {
             return unsubscribe;
         },
         dispatch({type, payload = {}}) {
-            const newState = reducer({
+            const newState = reducer(this.state, {
                 type,
                 payload,
             });
