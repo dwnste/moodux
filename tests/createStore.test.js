@@ -76,6 +76,28 @@ test('foo and bar are toggled', () => {
     expect(store.getState()).toEqual(toggledFooAndBarState);
 });
 
+test('dispatch 3 actions and see if subscription works', () => {
+    const store = createStore(initialState, reducer);
+
+    let counter = 0;
+    
+    const listener = () => {
+        counter++;
+    };
+
+    const unsubscribe = store.subscribe(listener);
+
+    store.dispatch(actionToggleFoo);
+    store.dispatch(actionToggleBar);
+    store.dispatch(actionDoSomething);
+
+    unsubscribe();
+
+    store.dispatch(actionDoSomething);
+
+    expect(counter).toBe(3);
+});
+
 /*
 
 const unsubscribe = store.subscribe(() => { console.log(state) });
