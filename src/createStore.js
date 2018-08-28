@@ -1,8 +1,9 @@
 let state = {};
 let listeners = [];
+let rootReducer;
 
 const dispatch = ({type, payload = {}}) => {
-    state = reducer(state, {
+    state = rootReducer(state, {
         type,
         payload,
     });
@@ -19,8 +20,16 @@ const dispatch = ({type, payload = {}}) => {
 
 const createStore = (reducer, preloadedState) => {
     state = preloadedState;
+    rootReducer = reducer;
 
     dispatch({ type: 'INIT' });
+
+    if (preloadedState) {
+        dispatch({
+            type: 'PRELOAD_STATE',
+            payload: preloadedState,
+        })
+    }
 
     return {
         subscribe(listener) {
