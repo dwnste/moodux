@@ -1,7 +1,6 @@
 const createStore = (reducer, preloadedState = {}) => {
     let listeners = [];
-
-    state = reducer(preloadedState, {
+    let state = reducer(preloadedState, {
         type: 'INIT',
     });
 
@@ -24,7 +23,7 @@ const createStore = (reducer, preloadedState = {}) => {
             return unsubscribe;
         },
         dispatch({type, payload = {}}) {
-            state = rootReducer(state, {
+            state = reducer(state, {
                 type,
                 payload,
             });
