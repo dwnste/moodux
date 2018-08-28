@@ -1,10 +1,8 @@
-const createStore = (reducer, preloadedState) => {
-    let state = {};
+const createStore = (reducer, preloadedState = {}) => {
     let listeners = [];
 
-    reducer({
+    state = reducer(preloadedState, {
         type: 'INIT',
-        payload: preloadedState,
     });
 
     return {
