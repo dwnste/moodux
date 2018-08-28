@@ -1,5 +1,9 @@
-const createStore = (reducer, preloadedState = {}) => {
-    let listeners = [];
+const createStore = (reducer, preloadedState, enhancer) => {
+    if (typeof(enhancer) === 'function') {
+        return enhancer(createStore)(reducer, preloadedState);
+    }
+
+    const listeners = [];
     let state = reducer(preloadedState, {
         type: 'INIT',
     });

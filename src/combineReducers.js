@@ -1,12 +1,12 @@
 const combineReducers = (reducers) => {
     const newState = {};
-    const shouldUpdateState = false;
+    let shouldUpdateState = false;
 
     return (state, action) => {
-        for (let key of (Object.keys(reducers))) {
+        for (const key of (Object.keys(reducers))) {
             const reducer = reducers[key];
-            newKeyState = reducer(state[key], action);
-            shouldUpdateState = newKeyState !== state[key];
+            newState[key] = reducer(state[key], action);
+            shouldUpdateState = newState[key] !== state[key];
         }
 
         return shouldUpdateState ? newState : state;
