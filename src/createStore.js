@@ -1,33 +1,48 @@
-const createStore = (state = {}, reducer) => {
+let state = {};
+let listeners = [];
+
+const dispatch = ({type, payload = {}}) => {
+    state = reducer(state, {
+        type,
+        payload,
+    });
+
+    listeners.forEach(listener => {
+        listener();
+    });
+
     return {
-        state,
-        listener: null,
+        type,
+        payload,
+    };
+};
+
+const createStore = (reducer, preloadedState) => {
+    state = preloadedState;
+
+    dispatch({ type: 'INIT' });
+
+    return {
         subscribe(listener) {
-            this.listener = listener;
+            if (!listener) {
+                return;
+            }
+
+            listeners.push(listener);
 
             const unsubscribe = () => {
-                this.listener = null;
+                const index = listeners.findIndex(func => func === listener);
+
+                if (index > -1) {
+                    listeners.splice(index, 1);
+                }
             };
 
             return unsubscribe;
         },
-        dispatch({type, payload = {}}) {
-            const newState = reducer(this.state, {
-                type,
-                payload,
-            });
-
-            this.state = {
-                ...this.state,
-                ...newState,
-            };
-
-            if (this.listener) {
-                this.listener();
-            }
-        },
+        dispatch,
         getState() {
-            return this.state;
+            return state;
         },
     };
 }

@@ -46,13 +46,13 @@ const actionDoSomething = {
 };
 
 test('state from getState is equal to initial', () => {
-    const store = createStore(initialState, reducer);
+    const store = createStore(reducer, initialState);
 
     expect(store.getState()).toEqual(initialState);
 });
 
 test('unknown action type doesn\'t change the state', () => {
-    const store = createStore(initialState, reducer);
+    const store = createStore(reducer, initialState);
 
     store.dispatch(actionDoSomething);
 
@@ -60,7 +60,7 @@ test('unknown action type doesn\'t change the state', () => {
 });
 
 test('foo is toggled', () => {
-    const store = createStore(initialState, reducer);
+    const store = createStore(reducer, initialState);
 
     store.dispatch(actionToggleFoo);
 
@@ -68,7 +68,7 @@ test('foo is toggled', () => {
 });
 
 test('foo and bar are toggled', () => {
-    const store = createStore(initialState, reducer);
+    const store = createStore(reducer, initialState);
 
     store.dispatch(actionToggleFoo);
     store.dispatch(actionToggleBar);
@@ -77,7 +77,7 @@ test('foo and bar are toggled', () => {
 });
 
 test('dispatch 3 actions and see if subscription works', () => {
-    const store = createStore(initialState, reducer);
+    const store = createStore(reducer, initialState);
 
     let counter = 0;
     
